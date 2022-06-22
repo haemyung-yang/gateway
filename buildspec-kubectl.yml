@@ -4,7 +4,6 @@ env:
   variables:
     IMAGE_REPO_NAME: "user22-gateway"
     
-
 phases:
   install:
     runtime-versions:
