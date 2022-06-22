@@ -8,12 +8,20 @@ phases:
   install:
     runtime-versions:
       java: corretto8
-     
+      docker: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo $IMAGE_REPO_NAME
+      - echo $AWS_ACCOUNT_ID
+      - echo $AWS_DEFAULT_REGION
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo start command
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION) 
   build:
     commands:
       - mvn package -Dmaven.test.skip=true
-      - docker build -t 271153858532.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      
+      - docker build -t 271153858532.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .      
   post_build:
     commands:
       - docker push 271153858532.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
