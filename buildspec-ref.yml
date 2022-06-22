@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: user22-registry
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+     
+  build:
+    commands:
+      - mvn package -Dmaven.test.skip=true
+      - docker build -t 271153858532.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      
+  post_build:
+    commands:
+      - docker push 271153858532.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
