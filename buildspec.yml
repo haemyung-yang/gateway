@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    IMAGE_REPO_NAME: "user22-registry"
+    IMAGE_REPO_NAME: "user22-gateway"
 
 phases:
   install:
